@@ -23,16 +23,16 @@
 ## Как запустить (Installation)
 
 1. Клонировать репозиторий:
-git clone https://https://github.com/ViktorVox/LaravelSite.git
+'git clone https://https://github.com/ViktorVox/LaravelSite.git'
 
 2. Установить зависимости:
-composer install
+'composer install'
 
 3. Создать файл окружения:
-cp .env.example .env
+'cp .env.example .env'
 
 4. Настроить базу данных в файле `.env` и запустить миграции:
-php artisan migrate
+'php artisan migrate'
 
 5. Запустить сервер:
-php artisan serve
+'php artisan serve'
