@@ -23,7 +23,7 @@
 ## Как запустить (Installation)
 
 1. Клонировать репозиторий:
-`git clone https://https://github.com/ViktorVox/LaravelSite.git`
+`git clone https://github.com/ViktorVox/LaravelSite.git`
 
 2. Установить зависимости:
 `composer install`
