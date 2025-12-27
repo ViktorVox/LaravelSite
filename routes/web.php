@@ -16,3 +16,12 @@ Route::post('/candidate', [CandidateController::class, 'store'])->name('candidat
 
 // Показать список
 Route::get('/candidates-list', [CandidateController::class, 'index'])->name('candidate.index');
+
+// Изменять статус
+Route::post('/candidate/{id}/status', [CandidateController::class, 'updateStatus'])->name('candidate.status');
+
+// Удаление кандидата
+Route::delete('/candidate/{id}', [CandidateController::class, 'destroy'])->name('candidate.destroy');
+
+// Добавить комментарий
+Route::post('/candidate/{id}/comment', [CandidateController::class, 'storeComment'])->name('comment.store');

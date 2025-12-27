@@ -26,14 +26,11 @@ class CandidateController extends Controller
 
     // Показать список
     public function index() {
-        // ПРОВЕРКА: Есть ли у человека пропуск?
         if (!session('is_admin')) {
-            // Если нет - возвращаем его на страницу входа
             return redirect()->route('login.form');
         }
 
-        // Если есть - показываем список
-        $candidates = Candidate::orderBy('created_at', 'desc')->get();
+        $candidates = Candidate::with('comments')->orderBy('created_at', 'desc')->get();
         return view('candidates_list', ['candidates' => $candidates]);
     }
 
@@ -65,5 +62,39 @@ class CandidateController extends Controller
         
         // Перенаправляем на форму входа с сообщением
         return redirect()->route('login.form')->with('error', 'Вы вышли из системы.');
+    }
+
+    // Метод изменения статуса
+    public function updateStatus(Request $request, $id) {
+        $candidate = Candidate::findOrFail($id);
+        $newStatus = $request->input('status');
+
+        if (in_array($newStatus, ['accepted', 'rejected'])) {
+            $candidate->update([
+                'status' => $newStatus
+            ]);
+            
+            return back()->with('success', 'Статус кандидата обновлен!');
+        }
+        
+        return back()->with('error', 'Некорректный статус');
+    }
+
+    public function destroy($id) {
+        Candidate::findOrFail($id)->delete();
+        return back()->with('success', 'Кандидат удален');
+    }
+    
+    public function storeComment(Request $request, $id) {
+        $request->validate([
+            'body' => 'required|max:500'
+        ]);
+
+        $candidate = Candidate::findOrFail($id);
+        $candidate->comments()->create([
+            'body' => $request->input('body')
+        ]);
+    
+        return back()->with('success', 'Комментарий добавлен');
     }
 }
